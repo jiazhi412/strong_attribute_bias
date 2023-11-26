@@ -52,7 +52,7 @@ pip install -r requirements.txt
 
 
 ## Experiments
-The pre-defined experiments in the paper can be found in `run.sh`. You can either directly run these pre-defined experiments with chosen hyper-parameters to reproduce results in the paper, or train and evaluate your model.
+The pre-defined experiments can be found in `run.sh`. You can either directly run these pre-defined experiments with chosen hyper-parameters to reproduce results in the paper, or train and evaluate your model.
 
 ### Training
 To train adversarial filter, please use `train.py`. To see all command-line accessible arguments run:
@@ -101,7 +101,9 @@ python eval.py --help
 ```
 
 To load the trained filter for evaluation, you can:
+
 either (1) use `--filter_name FILTER_NAME --filter_hp FILTER_HP --filter_idx FILTER_IDX`. For example, by indicating `--filter_name reproduce --filter_hp mi10.0_gc100.0_dc100.0_gr100.0 --filter_idx 19`, the filter which is saved as `result/reproduce/mi10.0_gc100.0_dc100.0_gr100.0/weights.19.pth` will be loaded.
+
 or (2) use `--filter_path FILTER_PATH` to explicitly indicate the absolute path of filter.
 
 
