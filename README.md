@@ -108,25 +108,25 @@ or (2) use `--filter_path FILTER_PATH` to explicitly indicate the absolute path 
 
 
 #### Colored MNIST dataset
-To reproduce results of adversarial filter in the extreme bias point, simply run:
+To reproduce the results of adversarial filter in the extreme bias point, simply run:
 ```
 python eval.py --experiment CMNIST_downstream_our --name NAME --biased_var 0 \
     --filter_train_mode universal 
 ```
-To reproduce results of baseline model in the extreme bias point, simply run:
+To reproduce the results of baseline model in the extreme bias point, simply run:
 ```
 python eval.py --experiment CMNIST_downstream_baseline --name NAME --biased_var 0
 ```
 
 #### CelebA dataset
-To reproduce results of adversarial filter in the extreme bias point, simply run:
+To reproduce the results of adversarial filter in the extreme bias point, simply run:
 ```
 python eval.py --experiment CelebA_downstream_our --name NAME --CelebA_train_mode CelebA_train_ex \
     --attributes Blond_Hair --CelebA_test_mode unbiased_ex --filter_train_mode universal
 python eval.py --experiment CelebA_downstream_our --name NAME --CelebA_train_mode CelebA_train_ex \
     --attributes Blond_Hair --CelebA_test_mode conflict_ex --filter_train_mode universal
 ```
-To reproduce results of baseline model in the extreme bias point, simply run:
+To reproduce the results of baseline model in the extreme bias point, simply run:
 ```
 python eval.py --experiment CelebA_downstream_baseline --name NAME \
     --CelebA_test_mode unbiased_ex --attributes Blond_Hair
@@ -136,14 +136,14 @@ python eval.py --experiment CelebA_downstream_baseline --name NAME \
 
 
 #### Adult Income dataset
-To reproduce results of adversarial filter in the extreme bias point, simply run:
+To reproduce the results of adversarial filter in the extreme bias point, simply run:
 ```
 python eval.py --experiment Adult_downstream_our --name NAME \
 --Adult_train_mode eb1_balanced --Adult_test_mode eb2_balanced --filter_train_mode universal
 python eval.py --experiment Adult_downstream_our --name NAME \
 --Adult_train_mode eb1_balanced --Adult_test_mode balanced --filter_train_mode universal
 ```
-To reproduce results of baseline model in the extreme bias point, simply run:
+To reproduce the results of baseline model in the extreme bias point, simply run:
 ```
 python eval.py --experiment Adult_downstream_baseline --name NAME \ 
 --Adult_train_mode eb1_balanced --Adult_test_mode eb2_balanced 
@@ -153,7 +153,7 @@ python eval.py --experiment Adult_downstream_baseline --name NAME \
 
 
 #### IMDB Face dataset
-To reproduce results of adversarial filter in the extreme bias point, simply run:
+To reproduce the results of adversarial filter in the extreme bias point, simply run:
 ```
 python eval.py --experiment IMDB_downstream_our --name NAME \ 
 --IMDB_train_mode eb1 --IMDB_test_mode eb2 --filter_train_mode universal
@@ -164,7 +164,7 @@ python eval.py --experiment IMDB_downstream_our --name NAME \
 python eval.py --experiment IMDB_downstream_our --name NAME \ 
 --IMDB_train_mode eb2 --IMDB_test_mode unbiased --filter_train_mode universal
 ```
-To reproduce results of baseline model in the extreme bias point, simply run:
+To reproduce the results of baseline model in the extreme bias point, simply run:
 ```
 python eval.py --experiment IMDB_downstream_baseline --name NAME \ 
 --IMDB_train_mode eb1 --IMDB_test_mode eb2
