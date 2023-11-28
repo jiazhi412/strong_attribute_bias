@@ -57,7 +57,7 @@ pip install -r requirements.txt
 
 
 ## Custom
-Besides these above-mentioned datasets, you can train and apply the adversarial filter on other datasets of interest.
+Besides the above-mentioned datasets, you can train and apply the adversarial filter on other datasets of interest.
 
 
 ### Dataset
