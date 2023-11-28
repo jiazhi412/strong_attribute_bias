@@ -35,9 +35,12 @@ def collect_args():
     parser.add_argument("--IMDB_attrs", default=["age"], nargs="+", help="attributes to eliminate")
     parser.add_argument("--IMDB_train_mode", type=str, choices=["eb1", "eb2", "unbiased", "all"], default="all")
 
-    #TODO Custom
+    # TODO Custom
     parser.add_argument("--Custom_attrs", nargs="+", help="attributes to eliminate")
-    parser.add_argument("--Custom_train_mode", type=str,)
+    parser.add_argument(
+        "--Custom_train_mode",
+        type=str,
+    )
 
     # hyper-parameter
     parser.add_argument("--gr", dest="gr", type=float, default=100.0)
@@ -103,7 +106,7 @@ def create_experiment_setting(args):
     if args.experiment == "CelebA_filter":
         args.n_attrs = len(args.CelebA_attrs)
         args.img_size = 224
-        args.beta1 = 0.5 
+        args.beta1 = 0.5
         args.beta2 = 0.999
         args.num_iter_mi = 40
         train_mark = args.CelebA_train_mode
@@ -124,12 +127,12 @@ def create_experiment_setting(args):
         train_mark = args.IMDB_train_mode
         args.data_path = os.path.join(args.data_prefix, "IMDB/processed_data")
         from models_train.IMDB_filter import Model
-    #TODO Custom
+    # TODO Custom
     if args.experiment == "Custom_filter":
         args.n_attrs = len(args.Custom_attrs)
         args.img_size = 224
-        train_mark = 'universal'
-        args.data_path = os.path.join(args.data_prefix, "Custom/processed_data")
+        train_mark = "universal"
+        args.data_path = os.path.join(args.data_prefix, "Custom/raw_data")
         from models_train.Custom_filter import Model
     print(args)
     utils.save_settings(args, train_mark)

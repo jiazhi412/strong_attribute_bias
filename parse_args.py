@@ -38,9 +38,15 @@ def collect_args():
     parser.add_argument("--IMDB_train_mode", type=str, default="eb1")
     parser.add_argument("--IMDB_test_mode", type=str, default="eb2", choices=["eb1", "eb2", "unbiased", "all"])
 
-    #TODO Custom
-    parser.add_argument("--Custom_train_mode", type=str,)
-    parser.add_argument("--Custom_test_mode", type=str,)
+    # TODO Custom
+    parser.add_argument(
+        "--Custom_train_mode",
+        type=str,
+    )
+    parser.add_argument(
+        "--Custom_test_mode",
+        type=str,
+    )
 
     ## filter choices
     parser.add_argument("--filter_name", default=None, type=str)
@@ -212,9 +218,9 @@ def create_experiment_setting(opt):
                 opt["filter_path"] = os.path.join(filter_path, "checkpoint", filter_number)
             from models_eval.IMDB_downstream_our import Model
 
-    #TODO Custom
+    # TODO Custom
     if opt["experiment"].startswith("Custom_downstream"):
-        opt["data_folder"] = os.path.join(opt["data_prefix"], "Custom/processed_data")
+        opt["data_folder"] = os.path.join(opt["data_prefix"], "Custom/raw_data")
         middle_description = (opt["Custom_train_mode"], opt["Custom_test_mode"])
         if opt["experiment"] == "Custom_downstream_baseline":
             from models_eval.Custom_downstream_baseline import Model
