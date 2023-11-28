@@ -38,6 +38,10 @@ def collect_args():
     parser.add_argument("--IMDB_train_mode", type=str, default="eb1")
     parser.add_argument("--IMDB_test_mode", type=str, default="eb2", choices=["eb1", "eb2", "unbiased", "all"])
 
+    #TODO Custom
+    parser.add_argument("--Custom_train_mode", type=str,)
+    parser.add_argument("--Custom_test_mode", type=str,)
+
     ## filter choices
     parser.add_argument("--filter_name", default=None, type=str)
     parser.add_argument("--filter_hp", default=None, type=str)
@@ -66,15 +70,14 @@ def collect_args():
     parser.add_argument("--no_cuda", action="store_true")
     parser.add_argument("--wandb_mode", type=str, default="disabled")  # online, offline, disabled
 
-
     return create_experiment_setting(vars(parser.parse_args()))
 
 
 def create_experiment_setting(opt):
     if torch.cuda.device_count() > 1:
         print("Let's use", torch.cuda.device_count(), "GPUs!")
-        opt['batch_size'] *= torch.cuda.device_count() // 2
-        opt['lr'] *= torch.cuda.device_count() // 2
+        opt["batch_size"] *= torch.cuda.device_count() // 2
+        opt["lr"] *= torch.cuda.device_count() // 2
 
     # debug corner case
     if opt["debug"]:
@@ -102,7 +105,7 @@ def create_experiment_setting(opt):
 
     # Colored MNIST
     if opt["experiment"].startswith("CMNIST"):
-        opt["data_folder"] = os.path.join(opt['data_prefix'], "MNIST")
+        opt["data_folder"] = os.path.join(opt["data_prefix"], "MNIST")
         middle_description = (str(opt["biased_var"]),)
         ### baseline
         if opt["experiment"] == "CMNIST_downstream_baseline":
@@ -129,7 +132,7 @@ def create_experiment_setting(opt):
 
     # CelebA
     if opt["experiment"].startswith("CelebA_downstream"):
-        opt["data_folder"] = os.path.join(opt['data_prefix'], "CelebA/processed_data")
+        opt["data_folder"] = os.path.join(opt["data_prefix"], "CelebA/processed_data")
         middle_description = (opt["attrs_pred"][0] if len(opt["attrs_pred"]) == 1 else "_".join(opt["attrs_pred"]), opt["CelebA_test_mode"])
         ### baseline
         if opt["experiment"].startswith("CelebA_downstream_baseline"):
@@ -161,7 +164,7 @@ def create_experiment_setting(opt):
 
     # Adult
     if opt["experiment"].startswith("Adult_downstream"):
-        opt["data_path"] = os.path.join(opt['data_prefix'], "Adult/processed_data/adult_newData.csv")
+        opt["data_path"] = os.path.join(opt["data_prefix"], "Adult/processed_data/adult_newData.csv")
         middle_description = (opt["Adult_train_mode"], opt["Adult_test_mode"])
         if opt["experiment"] == "Adult_downstream_baseline":
             from models_eval.Adult_downstream_baseline import Model
@@ -186,7 +189,7 @@ def create_experiment_setting(opt):
 
     # IMDB
     if opt["experiment"].startswith("IMDB_downstream"):
-        opt["data_folder"] = os.path.join(opt['data_prefix'], "IMDB/processed_data")
+        opt["data_folder"] = os.path.join(opt["data_prefix"], "IMDB/processed_data")
         middle_description = (opt["IMDB_train_mode"], opt["IMDB_test_mode"])
         if opt["experiment"] == "IMDB_downstream_baseline":
             from models_eval.IMDB_downstream_baseline import Model
@@ -208,6 +211,31 @@ def create_experiment_setting(opt):
                 opt["filter_parameters"] = Namespace(**utils.load_json(os.path.join(filter_path, "setting.txt")))
                 opt["filter_path"] = os.path.join(filter_path, "checkpoint", filter_number)
             from models_eval.IMDB_downstream_our import Model
+
+    #TODO Custom
+    if opt["experiment"].startswith("Custom_downstream"):
+        opt["data_folder"] = os.path.join(opt["data_prefix"], "Custom/processed_data")
+        middle_description = (opt["Custom_train_mode"], opt["Custom_test_mode"])
+        if opt["experiment"] == "Custom_downstream_baseline":
+            from models_eval.Custom_downstream_baseline import Model
+        elif opt["experiment"] == "Custom_downstream_our":
+            filter_experiment = "Custom_filter"
+            filter_name = opt["filter_name"] if opt["filter_name"] else "NAME"
+            filter_hyperparameter = opt["filter_hp"] if opt["filter_hp"] else "mi50.0_gc50.0_dc50.0_gr100.0"
+            filter_number = f"weights.{opt['filter_idx']}.pth" if opt["filter_idx"] else "weights.26.pth"
+            if opt["filter_train_mode"] == "biased":  # filter trained under the corresponding biased dataset
+                f_train_mode = opt["Custom_train_mode"]
+            elif opt["filter_train_mode"] == "universal":  # filter trained under true distribution
+                f_train_mode = "all"
+            if opt["filter_path"]:
+                components = opt["filter_path"].rsplit("/", 1)  # Split from the right, max 1 split
+                filter_dir = "/".join(components[:-1])  # Join all components except the last one
+                opt["filter_parameters"] = Namespace(**utils.load_json(os.path.join(filter_dir, "setting.txt")))
+            else:
+                filter_path = opt["filter_path"] if opt["filter_path"] else os.path.join(opt["ssd_path"], filter_experiment, filter_name, f_train_mode, filter_hyperparameter)
+                opt["filter_parameters"] = Namespace(**utils.load_json(os.path.join(filter_path, "setting.txt")))
+                opt["filter_path"] = os.path.join(filter_path, "checkpoint", filter_number)
+            from models_eval.Custom_downstream_our import Model
 
     opt["save_folder"] = os.path.join(opt["save_folder"], *middle_description)
     opt["wandb"] = "-".join((*middle_description, opt["save_file"]))

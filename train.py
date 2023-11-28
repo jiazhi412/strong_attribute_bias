@@ -35,6 +35,10 @@ def collect_args():
     parser.add_argument("--IMDB_attrs", default=["age"], nargs="+", help="attributes to eliminate")
     parser.add_argument("--IMDB_train_mode", type=str, choices=["eb1", "eb2", "unbiased", "all"], default="all")
 
+    #TODO Custom
+    parser.add_argument("--Custom_attrs", nargs="+", help="attributes to eliminate")
+    parser.add_argument("--Custom_train_mode", type=str,)
+
     # hyper-parameter
     parser.add_argument("--gr", dest="gr", type=float, default=100.0)
     parser.add_argument("--gc", dest="gc", type=float, default=100.0)
@@ -120,6 +124,13 @@ def create_experiment_setting(args):
         train_mark = args.IMDB_train_mode
         args.data_path = os.path.join(args.data_prefix, "IMDB/processed_data")
         from models_train.IMDB_filter import Model
+    #TODO Custom
+    if args.experiment == "Custom_filter":
+        args.n_attrs = len(args.Custom_attrs)
+        args.img_size = 224
+        train_mark = 'universal'
+        args.data_path = os.path.join(args.data_prefix, "Custom/processed_data")
+        from models_train.Custom_filter import Model
     print(args)
     utils.save_settings(args, train_mark)
     return Model(args), args

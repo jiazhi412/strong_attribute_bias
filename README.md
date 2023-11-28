@@ -1,14 +1,20 @@
 # SABAF: Removing Strong Attribute Bias from Neural Networks with Adversarial Filtering
-Find our paper at [arXiv](https://arxiv.org/abs/2311.07141). Please cite the following if using the code:
+Find our paper at [arXiv](https://arxiv.org/abs/2311.07141) and the short-version workshop paper at [arXiv](https://arxiv.org/pdf/2310.04955). Please cite the following if using the code:
 
 ```
-@misc{li2023sabaf,
-      title={SABAF: Removing Strong Attribute Bias from Neural Networks with Adversarial Filtering}, 
-      author={Jiazhi Li and Mahyar Khayatkhoei and Jiageng Zhu and Hanchen Xie and Mohamed E. Hussein and Wael AbdAlmageed},
-      year={2023},
-      eprint={2311.07141},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG}
+@article{li2023sabaf,
+  title={SABAF: Removing Strong Attribute Bias from Neural Networks with Adversarial Filtering},
+  author={Li, Jiazhi and Khayatkhoei, Mahyar and Zhu, Jiageng and Xie, Hanchen and Hussein, Mohamed E and AbdAlmageed, Wael},
+  journal={arXiv preprint arXiv:2311.07141},
+  year={2023}
+}
+```
+```
+@article{li2023information,
+  title={Information-Theoretic Bounds on The Removal of Attribute-Specific Bias From Neural Networks},
+  author={Li, Jiazhi and Khayatkhoei, Mahyar and Zhu, Jiageng and Xie, Hanchen and Hussein, Mohamed E and AbdAlmageed, Wael},
+  journal={arXiv preprint arXiv:2310.04955},
+  year={2023}
 }
 ```
 ![figures from the corresponding paper](teaser.png)
@@ -48,7 +54,24 @@ pip install -r requirements.txt
 
 
 
+## Custom
+Besides these above-mentioned datasets, you can train and apply the adversarial filter on other datasets of interest.
 
+
+### Dataset
+Place data in `Custom/processed_data`. Write the methods `__len__` and `__getitem__` in `dataloader/Custom.py`, and `set_data` in `models_train/Custom_filter.py` and `models_eval/set_Custom.py`.
+
+### Training
+To train adversarial dataset on the custom dataset, simply run:
+```
+python train.py --experiment Custom_filter --name NAME 
+```
+
+### Apply adversarial filter
+To apply adversarial filter on any downstream tasks, simply run:
+```
+python eval.py --experiment Custom_downstream_our --name NAME
+```
 
 
 ## Experiments
