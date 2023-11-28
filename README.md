@@ -57,11 +57,10 @@ pip install -r requirements.txt
 
 
 ## Custom
-Besides the above-mentioned datasets, you can train and apply the adversarial filter on other datasets of interest.
-
+In addition to the datasets mentioned above, you can train and apply adversarial filter on other datasets of interest.
 
 ### Dataset
-Place data in `Custom/processed_data`. Write the methods `__len__` and `__getitem__` in `dataloader/Custom.py`, and `set_data` in `models_train/Custom_filter.py` and `models_eval/set_Custom.py`.
+Place data in `./data/Custom/raw_data`. Write the methods `__len__` and `__getitem__` in `./dataloader/Custom.py`, and `set_data` in `./models_train/Custom_filter.py` and `./models_eval/set_Custom.py`.
 
 ### Training
 To train adversarial dataset on the custom dataset, simply run:
@@ -70,7 +69,7 @@ python train.py --experiment Custom_filter --name NAME
 ```
 
 ### Applying
-To apply adversarial filter on any downstream tasks, simply run:
+To apply adversarial filter on any interested downstream tasks, simply run:
 ```
 python eval.py --experiment Custom_downstream_our --name NAME
 ```
