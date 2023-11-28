@@ -69,7 +69,7 @@ To train adversarial dataset on the custom dataset, simply run:
 python train.py --experiment Custom_filter --name NAME 
 ```
 
-### Apply adversarial filter
+### Applying
 To apply adversarial filter on any downstream tasks, simply run:
 ```
 python eval.py --experiment Custom_downstream_our --name NAME
