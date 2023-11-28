@@ -1,6 +1,7 @@
 # SABAF: Removing Strong Attribute Bias from Neural Networks with Adversarial Filtering
 Find our paper at [arXiv](https://arxiv.org/abs/2311.07141) and the short-version workshop paper at [arXiv](https://arxiv.org/pdf/2310.04955). Please cite the following if using the code:
 
+Long paper:
 ```
 @article{li2023sabaf,
   title={SABAF: Removing Strong Attribute Bias from Neural Networks with Adversarial Filtering},
@@ -9,6 +10,7 @@ Find our paper at [arXiv](https://arxiv.org/abs/2311.07141) and the short-versio
   year={2023}
 }
 ```
+Short paper:
 ```
 @article{li2023information,
   title={Information-Theoretic Bounds on The Removal of Attribute-Specific Bias From Neural Networks},
