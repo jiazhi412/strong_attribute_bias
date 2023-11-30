@@ -74,7 +74,7 @@ def collect_args():
     parser.add_argument("--print_freq", type=int, default=50)
     parser.add_argument("--no_sm", action="store_true")
     parser.add_argument("--no_cuda", action="store_true")
-    parser.add_argument("--wandb_mode", type=str, default="disabled")  # online, offline, disabled
+    parser.add_argument("--wandb_mode", type=str, default='disabled', choices = ['online', 'offline', 'disabled'])
 
     return create_experiment_setting(vars(parser.parse_args()))
 
